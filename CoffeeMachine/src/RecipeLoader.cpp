@@ -46,7 +46,12 @@ std::vector<Recipe> RecipeLoader::load() const {
             if (lastColon == std::string::npos) continue;
 
             std::string ingredientName = trim(token.substr(0, lastColon));
-            int portions = std::stoi(trim(token.substr(lastColon + 1)));
+            int portions = 0;
+            try {
+                portions = std::stoi(trim(token.substr(lastColon + 1)));
+            } catch (const std::exception&) {
+                continue;
+            }
 
             ingredients.emplace_back(ingredientName, portions);
         }
